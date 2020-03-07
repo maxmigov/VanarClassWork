@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
 
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 public class NasaDataProvider {
@@ -13,10 +14,10 @@ public class NasaDataProvider {
 	@SuppressWarnings("unused")
 	private final static String NEO_ENDPOINT = "https://api.nasa.gov/neo/rest/v1/feed";
 	
-	public void getNeoAsteroids() throws Exception {
+	public void getNeoAsteroids( String start, String end ) throws Exception {
 		
 		// 1. connect to NASA API
-		URL oracle = new URL(NEO_ENDPOINT + "?start_date=2015-09-07&end_date=2015-09-08&api_key=DEMO_KEY");
+		URL oracle = new URL(NEO_ENDPOINT + "?start_date=" + start + "&end_date=" + end + "&api_key=" + ACCESS_KEY);
         BufferedReader in = new BufferedReader(
         new InputStreamReader(oracle.openStream()));
 		// 2. read data
@@ -30,6 +31,17 @@ public class NasaDataProvider {
 		// 3. parse JSON
         JSONObject data = new JSONObject(stringData);
 		// 4. test some data
+        int count = data.getInt("element_count");
+        System.out.println("Found " + count + " results.");
+        Float d = data.getJSONObject("near_earth_objects")
+        				   .getJSONArray("2020-03-01")
+        				   .getJSONObject(0)
+        				   .getJSONObject("estimated_diameter")
+        				   .getJSONObject("kilometers")
+        				   .getFloat("estimated_diameter_min");
+        System.out.println("Diameter in KM " + d);
+        				   
+        				   
 		
 	}
 }
