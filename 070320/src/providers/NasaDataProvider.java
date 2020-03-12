@@ -42,6 +42,7 @@ public class NasaDataProvider {
         System.out.println("Diameter in KM " + d);*/
 
         Integer JSON_array_size = data.getInt("element_count");
+        Asteroids.date = start;
         List<Asteroids> asteroid_list = new ArrayList<>();
         for (int i = 0; i < JSON_array_size; i++) {
                 asteroid_list.add(new Asteroids(data.getJSONObject("near_earth_objects")
@@ -66,6 +67,7 @@ public class NasaDataProvider {
                                 .getJSONObject(i)
                                 .getBoolean("is_potentially_hazardous_asteroid")));
         }
+        System.out.println('\n' + "______" + Asteroids.date + "______" + '\n');
         for (Asteroids s : asteroid_list) {
             System.out.println(s);
         }

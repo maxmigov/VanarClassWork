@@ -1,6 +1,7 @@
 package src.providers;
 
 public class Asteroids {
+    public static String date;
     private Integer id = 0;
     private Float km_to_earth = 0f;
     private Float km_diameter = 0f;
