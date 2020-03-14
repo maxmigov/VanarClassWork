@@ -3,10 +3,11 @@ package src.providers;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 import org.json.JSONObject;
+
+import static org.json.JSONObject.getNames;
 
 public class NasaDataProvider {
 
@@ -41,7 +42,7 @@ public class NasaDataProvider {
                 .getFloat("estimated_diameter_min");
         System.out.println("Diameter in KM " + d);*/
 
-        Integer JSON_array_size = data.getInt("element_count");
+        /*Integer JSON_array_size = data.getInt("element_count");
         Asteroids.date = start;
         List<Asteroids> asteroid_list = new ArrayList<>();
         for (int i = 0; i < JSON_array_size; i++) {
@@ -70,6 +71,52 @@ public class NasaDataProvider {
         System.out.println('\n' + "______" + Asteroids.date + "______" + '\n');
         for (Asteroids s : asteroid_list) {
             System.out.println(s);
+        }*/
+
+        String[] date_array = getNames(data.getJSONObject("near_earth_objects"));
+        List<String> date_array_list = new ArrayList<>();
+        Collections.addAll(date_array_list, date_array);
+        Integer date_array_list_size = date_array_list.size();
+        /*Collections.sort(date_array_list);
+        for (int i = 0; i < date_array_list.size(); i++) {
+            System.out.println(date_array_list.get(i));
         }
+
+        */
+        List<Asteroids> asteroids = new ArrayList<>();
+        for (int i = 0; i < date_array_list_size; i++) {
+            asteroids.add((new Asteroids
+                    (data.getJSONObject("near_earth_objects")
+                    .getJSONArray(start)
+                    .getJSONObject(i)
+                    .getInt("id"),
+                    data.getJSONObject("near_earth_objects")
+                            .getJSONArray(start)
+                            .getJSONObject(i)
+                            .getJSONArray("close_approach_data")
+                            .getJSONObject(0)
+                            .getJSONObject("miss_distance")
+                            .getFloat("kilometers"),
+                    data.getJSONObject("near_earth_objects")
+                            .getJSONArray(start)
+                            .getJSONObject(i)
+                            .getJSONObject("estimated_diameter")
+                            .getJSONObject("kilometers")
+                            .getFloat("estimated_diameter_max"),
+                    data.getJSONObject("near_earth_objects")
+                            .getJSONArray(start)
+                            .getJSONObject(i)
+                            .getBoolean("is_potentially_hazardous_asteroid"))));
+        }
+        for (int i = 0; i < asteroids.size(); i++) {
+            System.out.println(asteroids.get(i));
+        }
+
+        /*Map<String, List<Asteroids>> map = new HashMap<String, List<Asteroids>>();
+            for () {
+                
+            }
+
+         */
     }
 }
