@@ -85,28 +85,30 @@ public class NasaDataProvider {
         */
         List<Asteroids> asteroids = new ArrayList<>();
         for (int i = 0; i < date_array_list_size; i++) {
-            asteroids.add((new Asteroids
-                    (data.getJSONObject("near_earth_objects")
-                    .getJSONArray(start)
-                    .getJSONObject(i)
-                    .getInt("id"),
-                    data.getJSONObject("near_earth_objects")
-                            .getJSONArray(start)
-                            .getJSONObject(i)
-                            .getJSONArray("close_approach_data")
-                            .getJSONObject(0)
-                            .getJSONObject("miss_distance")
-                            .getFloat("kilometers"),
-                    data.getJSONObject("near_earth_objects")
-                            .getJSONArray(start)
-                            .getJSONObject(i)
-                            .getJSONObject("estimated_diameter")
-                            .getJSONObject("kilometers")
-                            .getFloat("estimated_diameter_max"),
-                    data.getJSONObject("near_earth_objects")
-                            .getJSONArray(start)
-                            .getJSONObject(i)
-                            .getBoolean("is_potentially_hazardous_asteroid"))));
+            for (String s : date_array_list) {
+                                asteroids.add((new Asteroids
+                                (data.getJSONObject("near_earth_objects")
+                                        .getJSONArray(s)
+                                        .getJSONObject(i)
+                                        .getInt("id"),
+                                data.getJSONObject("near_earth_objects")
+                                        .getJSONArray(s)
+                                        .getJSONObject(i)
+                                        .getJSONArray("close_approach_data")
+                                        .getJSONObject(0)
+                                        .getJSONObject("miss_distance")
+                                        .getFloat("kilometers"),
+                                data.getJSONObject("near_earth_objects")
+                                        .getJSONArray(s)
+                                        .getJSONObject(i)
+                                        .getJSONObject("estimated_diameter")
+                                        .getJSONObject("kilometers")
+                                        .getFloat("estimated_diameter_max"),
+                                data.getJSONObject("near_earth_objects")
+                                        .getJSONArray(s)
+                                        .getJSONObject(i)
+                                        .getBoolean("is_potentially_hazardous_asteroid"))));
+            }
         }
         for (int i = 0; i < asteroids.size(); i++) {
             System.out.println(asteroids.get(i));
