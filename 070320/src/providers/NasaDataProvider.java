@@ -124,11 +124,11 @@ public class NasaDataProvider {
         }
         */
         JSONObject object = (JSONObject) data.get("near_earth_objects");
-        Set<String> keys = object.keySet();
-        ObjectMapper mapper = new ObjectMapper();
-        Map<String, Object> carMap = mapper.readValue(data.getJSONObject("near_earth_objects"), Asteroids.class);
-        for (String s : keys) {
-            System.out.println(s);
+        Map<String, Object> keys = object.toMap();
+
+        for (Map.Entry<String, Object> pair : keys.entrySet()) {
+            String key = pair.getKey();
+            System.out.println(key + ":");
         }
 
         /*Map<String, List<Asteroids>> map = new HashMap<String, List<Asteroids>>();
