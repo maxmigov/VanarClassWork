@@ -2,9 +2,15 @@ package src.providers;
 
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.lang.reflect.Array;
 import java.net.URL;
 import java.util.*;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
+
+
+import com.fasterxml.jackson.databind.type.ReferenceType;
+import org.json.JSONArray;
 import org.json.JSONObject;
 
 import static org.json.JSONObject.getNames;
@@ -15,6 +21,7 @@ public class NasaDataProvider {
     private final static String ACCESS_KEY = "5nEfGfLZfmjnN062mEw9oEn4UdwbkUPNdmypwAmB";
     @SuppressWarnings("unused")
     private final static String NEO_ENDPOINT = "https://api.nasa.gov/neo/rest/v1/feed";
+
 
     public void getNeoAsteroids( String start, String end ) throws Exception {
 
@@ -83,6 +90,7 @@ public class NasaDataProvider {
         }
 
         */
+        /*
         List<Asteroids> asteroids = new ArrayList<>();
         for (int i = 0; i < date_array_list_size; i++) {
             for (String s : date_array_list) {
@@ -109,9 +117,18 @@ public class NasaDataProvider {
                                         .getJSONObject(i)
                                         .getBoolean("is_potentially_hazardous_asteroid"))));
             }
+
         }
         for (int i = 0; i < asteroids.size(); i++) {
             System.out.println(asteroids.get(i));
+        }
+        */
+        JSONObject object = (JSONObject) data.get("near_earth_objects");
+        Set<String> keys = object.keySet();
+        ObjectMapper mapper = new ObjectMapper();
+        Map<String, Object> carMap = mapper.readValue(data.getJSONObject("near_earth_objects"), Asteroids.class);
+        for (String s : keys) {
+            System.out.println(s);
         }
 
         /*Map<String, List<Asteroids>> map = new HashMap<String, List<Asteroids>>();
