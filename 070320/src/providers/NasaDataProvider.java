@@ -119,23 +119,18 @@ public class NasaDataProvider {
             }
 
         }
-        for (int i = 0; i < asteroids.size(); i++) {
-            System.out.println(asteroids.get(i));
-        }
         */
         JSONObject object = (JSONObject) data.get("near_earth_objects");
         Map<String, Object> keys = object.toMap();
 
         for (Map.Entry<String, Object> pair : keys.entrySet()) {
-            String key = pair.getKey();
-            System.out.println(key + ":");
+            System.out.println(pair.getKey() + ":" + pair.getValue());
+        }
+        for (Map.Entry<String, Object> pair : keys.entrySet()) {
+            if (pair.getValue().equals("estimated_diameter_max")){
+                System.out.println(pair.getValue());
+            }
         }
 
-        /*Map<String, List<Asteroids>> map = new HashMap<String, List<Asteroids>>();
-            for () {
-                
-            }
-
-         */
     }
 }
