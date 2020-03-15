@@ -126,10 +126,16 @@ public class NasaDataProvider {
         for (Map.Entry<String, Object> pair : keys.entrySet()) {
             System.out.println(pair.getKey() + ":" + pair.getValue());
         }
-        for (Map.Entry<String, Object> pair : keys.entrySet()) {
-            if (pair.getValue().equals("estimated_diameter_max")){
-                System.out.println(pair.getValue());
-            }
+        for (String name : keys.keySet())
+
+        {
+
+            // поиск значения
+
+            Object id = (Object) keys.get(name);
+
+            System.out.println("Key = " + name + ", Value = " + id);
+
         }
 
     }
