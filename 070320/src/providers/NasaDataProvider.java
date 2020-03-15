@@ -132,7 +132,7 @@ public class NasaDataProvider {
 
             // поиск значения
 
-            Object id = (Object) keys.get(name);
+            Object id = keys.get(name);
 
             System.out.println("Key = " + name + ", Value = " + id);
 
