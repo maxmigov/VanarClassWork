@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<resources>
+    <string name="endpoint">https://api.nasa.gov/neo/rest/v1/neo/browse?api_key=</string>
+    <string name="apikey">5nEfGfLZfmjnN062mEw9oEn4UdwbkUPNdmypwAmB</string>
+</resources>
