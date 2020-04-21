@@ -1,5 +1,6 @@
 package space;
 
+import config.XMLConfigurationProvider;
 import org.json.JSONObject;
 
 import java.io.BufferedReader;
@@ -13,14 +14,24 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class NASADataProvider {
-    private final static String ACCESS_KEY = "5nEfGfLZfmjnN062mEw9oEn4UdwbkUPNdmypwAmB";
-    private final static String NEO_ENDPOINT = "https://api.nasa.gov/neo/rest/v1/feed";
+    private String key;
+    private String url;
+    {
+        try {
+            key = XMLConfigurationProvider.getValue("key", "nasa.xml");
+            url = XMLConfigurationProvider.getValue("url", "nasa.xml");
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+    }
+
+
     private final static int ONE_MILLION = 1_000_000;
     private final static byte INDEX_ZERO = 0;
 
-    public void getNeoAsteroids(String startDate, String endDate) throws IOException {
+    public List<Asteroid> getNeoAsteroids(String startDate, String endDate) throws IOException {
 // 1. connect to nasa API
-        URL oracle = new URL(NEO_ENDPOINT + "?start_date=" + startDate + "&end_date=" + endDate + "&api_key=" + ACCESS_KEY);
+        URL oracle = new URL(url + "?start_date=" + startDate + "&end_date=" + endDate + "&api_key=" + key);
         BufferedReader in = new BufferedReader(
                 new InputStreamReader(oracle.openStream()));
 // 2. read data
@@ -52,8 +63,9 @@ public class NASADataProvider {
                 asteroids.add(new Asteroid(day, getMissDistance(data, day, j), getDiameter(data, day, j), getIsHazardous(data, day, j)));
             day = day.plusDays(1);
         }
-        printResult(asteroids);
+      //  printResult(asteroids);
 
+        return asteroids;
     }
 
     private float getDiameter(JSONObject data, LocalDate date, int index) {
@@ -91,4 +103,5 @@ public class NASADataProvider {
                     asteroid.getHazardous() ? "it is hazardous!" : "it's not hazardous!");
         }
     }
+
 }
